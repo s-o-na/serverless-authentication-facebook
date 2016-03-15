@@ -13,7 +13,7 @@
     "chai": "^3.5.0",
     "mocha": "^2.4.5",
     "sinon": "^1.17.3",
-    "serverless-authentication": "git@github.com:laardee/serverless-authentication.git#develop"
+    "serverless-authentication": "https://github.com/laardee/serverless-authentication.git#develop"
   },
   "scripts": {
     "compile": "babel src --out-dir lib",
