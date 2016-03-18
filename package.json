@@ -1,6 +1,6 @@
 {
   "name": "serverless-authentication-facebook",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Facebook module for Serverless Authentication",
   "main": "lib/index.js",
   "license": "MIT",
