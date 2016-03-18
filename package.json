@@ -1,11 +1,17 @@
 {
   "name": "serverless-authentication-facebook",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Facebook module for Serverless Authentication",
   "main": "lib/index.js",
   "license": "MIT",
   "private": false,
   "author": "Eetu Tuomala <eetu.tuomala@sc5.io>",
+  "keywords": [
+    "serverless",
+    "aws",
+    "oauth",
+    "lambda"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/laardee/serverless-authentication-facebook"
