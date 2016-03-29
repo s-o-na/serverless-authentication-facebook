@@ -16,7 +16,7 @@ export function signin({id, redirect_uri}, {scope, state}, callback) {
     params.state = state;
   }
   let url = utils.urlBuilder('https://www.facebook.com/dialog/oauth', params);
-  callback(null, {url: url});
+  callback(null, {url});
 }
 
 export function callback({code, state}, {id, redirect_uri, secret}, callback) {
