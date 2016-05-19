@@ -1,22 +1,23 @@
-"use strict";
+'use strict';
 
-let config = require('serverless-authentication').config;
-let auth = require('../lib');
-let nock = require('nock');
+const config = require('serverless-authentication').config;
+const auth = require('../lib');
+const nock = require('nock');
+const expect = require('chai').expect;
 
 describe('Facebook authentication', () => {
   describe('Signin', () => {
     it('tests signin without params', () => {
-      let providerConfig = config('facebook');
-      auth.signin(providerConfig, {}, (err, data) => {
+      const providerConfig = config('facebook');
+      auth.signinHandler(providerConfig, {}, (err, data) => {
         expect(err).to.be.null;
         expect(data.url).to.equal('https://www.facebook.com/dialog/oauth?client_id=fb-mock-id&redirect_uri=https://api-id.execute-api.eu-west-1.amazonaws.com/dev/callback/facebook');
       });
     });
 
     it('test signin with scope and state params', () => {
-      let providerConfig = config('facebook');
-      auth.signin(providerConfig, {scope: 'email', state: '123456'}, (err, data) => {
+      const providerConfig = config('facebook');
+      auth.signinHandler(providerConfig, {scope: 'email', state: '123456'}, (err, data) => {
         expect(err).to.be.null;
         expect(data.url).to.equal('https://www.facebook.com/dialog/oauth?client_id=fb-mock-id&redirect_uri=https://api-id.execute-api.eu-west-1.amazonaws.com/dev/callback/facebook&scope=email&state=123456');
       });
@@ -25,7 +26,7 @@ describe('Facebook authentication', () => {
 
   describe('Callback', () => {
     before(() => {
-      let providerConfig = config('facebook');
+      const providerConfig = config('facebook');
       nock('https://graph.facebook.com')
         .get('/v2.3/oauth/access_token')
         .query({
@@ -54,8 +55,8 @@ describe('Facebook authentication', () => {
         });
     });
     it('should return profile', (done) => {
-      let providerConfig = config('facebook');
-      auth.callback({code: 'code', state: 'state'}, providerConfig, (err, profile) => {
+      const providerConfig = config('facebook');
+      auth.callbackHandler({code: 'code', state: 'state'}, providerConfig, (err, profile) => {
         expect(profile.id).to.equal('user-id-1');
         expect(profile.name).to.equal('Eetu Tuomala');
         expect(profile.email).to.equal('email@test.com');
