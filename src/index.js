@@ -3,17 +3,15 @@
 import { Profile, Provider } from 'serverless-authentication';
 
 function mapProfile(response) {
-  return new Profile({
-    id: response.id,
-    name: response.name,
-    email: response.email,
+  const overwrites = {
     picture:
       response.picture
-        && response.picture.data
-        && !response.picture.data.is_silhouette ? response.picture.data.url : null,
+      && response.picture.data
+      && !response.picture.data.is_silhouette ? response.picture.data.url : null,
     provider: 'facebook',
     _raw: response
-  });
+  };
+  return new Profile(Object.assign(response, overwrites));
 }
 
 class FacebookProvider extends Provider {
