@@ -8,9 +8,9 @@ function mapProfile(response) {
       response.picture
       && response.picture.data
       && !response.picture.data.is_silhouette ? response.picture.data.url : null,
-    provider: 'facebook',
-    _raw: response
+    provider: 'facebook'
   };
+
   return new Profile(Object.assign(response, overwrites));
 }
 
@@ -20,6 +20,7 @@ class FacebookProvider extends Provider {
       { scope, state },
       { signin_uri: 'https://www.facebook.com/dialog/oauth' }
     );
+
     super.signin(options, callback);
   }
 
@@ -30,14 +31,18 @@ class FacebookProvider extends Provider {
       profileMap: mapProfile,
       authorizationMethod: 'GET'
     };
+
     super.callback(event, options, { profile: { fields: 'id,name,picture,email' } }, callback);
   }
 }
 
-export function signinHandler(config, options, callback) {
+const signinHandler = (config, options, callback) =>
   (new FacebookProvider(config)).signinHandler(options, callback);
-}
 
-export function callbackHandler(event, config, callback) {
+const callbackHandler = (event, config, callback) =>
   (new FacebookProvider(config)).callbackHandler(event, callback);
-}
+
+exports.signinHandler = signinHandler;
+exports.signin = signinHandler; // old syntax, remove later
+exports.callbackHandler = callbackHandler;
+exports.callback = callbackHandler; // old syntax, remove later
